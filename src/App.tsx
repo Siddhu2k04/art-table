@@ -27,9 +27,7 @@ export interface ApiResponse {
 
 
 function App() {
-  // ==============================
-  // STATE
-  // ==============================
+ 
 
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -39,9 +37,7 @@ function App() {
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [selectCount, setSelectCount] = useState<string>("");
 
-  // ==============================
-  // FETCH FUNCTION (SERVER SIDE)
-  // ==============================
+
 
   const fetchArtworks = async (page: number) => {
     try {
@@ -67,11 +63,7 @@ function App() {
     fetchArtworks(currentPage);
   }, [currentPage]);
 
-  // ==============================
-  // PERSISTENT SELECTION LOGIC
-  // ==============================
-
-  // Derive selected rows for current page
+ 
   const selectedRows = artworks.filter((art) =>
     selectedIds.has(art.id)
   );
@@ -93,9 +85,7 @@ function App() {
     setSelectedIds(updatedSelection);
   };
 
-  // ==============================
-  // CUSTOM ROW SELECTION (NO PREFETCHING)
-  // ==============================
+
 
   const handleCustomSelect = () => {
     const count = parseInt(selectCount);
@@ -107,7 +97,7 @@ function App() {
 
     const updatedSelection = new Set(selectedIds);
 
-    // Select only from current page
+  
     const rowsToSelect = artworks.slice(0, count);
 
     rowsToSelect.forEach((row) => {
@@ -118,9 +108,7 @@ function App() {
     setSelectCount("");
   };
 
-  // ==============================
-  // UI
-  // ==============================
+  
 
   return (
     <div style={{ padding: "2rem" }}>
@@ -156,7 +144,7 @@ function App() {
           setCurrentPage(newPage);
         }}
       >
-        {/* Checkbox column FIRST */}
+    
         <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
 
         <Column field="title" header="Title" />
