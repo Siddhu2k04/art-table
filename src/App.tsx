@@ -28,8 +28,14 @@ export interface ApiResponse {
 
 function App() {
  
+const [first, setFirst] = useState<number>(0);
 
+const onPage = (e: any) => {
+  setFirst(e.first);
+  setCurrentPage(e.page + 1);
+};
   const [artworks, setArtworks] = useState<Artwork[]>([]);
+  const [selectedArtworks, setSelectedArtworks] = useState<Artwork[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalRecords, setTotalRecords] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -129,21 +135,20 @@ function App() {
       </div>
 
       <DataTable
-        value={artworks}
-        paginator
-        rows={12}
-        totalRecords={totalRecords}
-        first={(currentPage - 1) * 12}
-        lazy
-        loading={loading}
-        dataKey="id"
-        selection={selectedRows}
-        onSelectionChange={handleSelectionChange}
-        onPage={(e) => {
-          const newPage = (e.page ?? 0) + 1;
-          setCurrentPage(newPage);
-        }}
-      >
+  value={artworks}
+  paginator
+  rows={10}
+  totalRecords={totalRecords}
+  first={first}
+  lazy
+  loading={loading}
+  dataKey="id"
+  selection={selectedArtworks}
+  onSelectionChange={(e) => setSelectedArtworks(e.value)}
+  onPage={onPage}
+  selectionMode="multiple"
+  cellSelection={false}
+>
     
         <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
 
